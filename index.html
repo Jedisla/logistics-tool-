@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logistics Tool</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+    .sub {
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .field.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    input, select, textarea, button {
+      font: inherit;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      background: #fff;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .primary {
+      background: #111827;
+      color: white;
+    }
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .output {
+      margin-top: 24px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px;
+      white-space: pre-wrap;
+      min-height: 120px;
+    }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Logistics Request Tool</h1>
+      <div class="sub">Basic HTML app deployed through Azure Static Web Apps.</div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="jobName">Job Name</label>
+          <input id="jobName" placeholder="Example: MA-Lia-Honda" />
+        </div>
+
+        <div class="field">
+          <label for="jobNumber">Job Number</label>
+          <input id="jobNumber" placeholder="Example: 9762" />
+        </div>
+
+        <div class="field full">
+          <label for="siteAddress">Site Address</label>
+          <input id="siteAddress" placeholder="Example: 293 King St, Northampton, MA 01060" />
+        </div>
+
+        <div class="field">
+          <label for="equipmentType">Equipment Type</label>
+          <select id="equipmentType">
+            <option value="">Select equipment</option>
+            <option>6k Lull</option>
+            <option>10k Lull</option>
+            <option>Scissor Lift</option>
+            <option>Boom Lift</option>
+            <option>Dumpster</option>
+            <option>Porta John</option>
+            <option>Storage Container</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="neededDate">Needed Date</label>
+          <input id="neededDate" type="date" />
+        </div>
+
+        <div class="field full">
+          <label for="notes">Notes</label>
+          <textarea id="notes" placeholder="Add any special notes here..."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="generateBtn">Generate Summary</button>
+        <button class="secondary" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="output" id="output">Your request summary will appear here.</div>
+    </div>
+  </div>
+
+  <script>
+    const jobName = document.getElementById('jobName');
+    const jobNumber = document.getElementById('jobNumber');
+    const siteAddress = document.getElementById('siteAddress');
+    const equipmentType = document.getElementById('equipmentType');
+    const neededDate = document.getElementById('neededDate');
+    const notes = document.getElementById('notes');
+    const output = document.getElementById('output');
+    const generateBtn = document.getElementById('generateBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    generateBtn.addEventListener('click', () => {
+      const summary =
+`Rental / Logistics Request Summary
+---------------------------------
+Job Name: ${jobName.value || '-'}
+Job Number: ${jobNumber.value || '-'}
+Site Address: ${siteAddress.value || '-'}
+Equipment Type: ${equipmentType.value || '-'}
+Needed Date: ${neededDate.value || '-'}
+Notes: ${notes.value || '-'}
+
+Status: Draft generated successfully.`;
+
+      output.textContent = summary;
+    });
+
+    clearBtn.addEventListener('click', () => {
+      jobName.value = '';
+      jobNumber.value = '';
+      siteAddress.value = '';
+      equipmentType.value = '';
+      neededDate.value = '';
+      notes.value = '';
+      output.textContent = 'Your request summary will appear here.';
+    });
+  </script>
+</body>
+</html>
